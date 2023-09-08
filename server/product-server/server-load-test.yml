@@ -1,0 +1,32 @@
+config:
+  # This is a test server
+  target: http://localhost:3000
+  phases:
+    - duration: 20
+      arrivalRate: 1
+      name: Sustained Single User
+    # - duration: 20
+    #   arrivalRate: 10
+    #   name: Sustained load
+  # Load & configure a couple of useful plugins
+  # https://docs.art/reference/extensions
+  plugins:
+    ensure: {}
+    apdex: {}
+    metrics-by-endpoint: {}
+  apdex:
+    threshold: 100
+  ensure:
+      thresholds:
+        - http.response_time.p99: 100
+        - http.response_time.p95: 75
+scenarios:
+  - flow:
+      - loop:
+        - get:
+            url: "/products"
+        - get:
+            url: "/products/2389"
+        - get:
+            url: "/products/2389/styles"
+        count: 1

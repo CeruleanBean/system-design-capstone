@@ -1,0 +1,12 @@
+config:
+  target: 'http://127.0.0.1:3000'
+  phases:
+    - duration: 30  # Test duration in seconds
+      arrivalRate: 25  # Number of new virtual users per second
+
+scenarios:
+  - flow:
+      - get:
+          url: '/qa/questions/?product_id=37323'
+          expect:
+            - statusCode: 200
